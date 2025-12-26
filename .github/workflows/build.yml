@@ -10,8 +10,6 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
-      with:
-        submodules: recursive
     
     - name: Setup MSVC
       uses: microsoft/setup-msbuild@v2
@@ -21,23 +19,28 @@ jobs:
       with:
         vcpkgGitCommitId: 'c8696863d371ab7f46e213d8f5ca923c4aef2a00'
     
-    - name: Install libxlsxwriter
+    - name: Install dependencies
       run: |
-        vcpkg install libxlsxwriter:x86-windows-static
-        vcpkg install zlib:x86-windows-static
+        vcpkg install libxlsxwriter:x86-windows
+        vcpkg install zlib:x86-windows
       
     - name: Build DLL
       shell: cmd
       run: |
         call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars32.bat"
         cl /LD /MD /O2 ^
-          /I"%VCPKG_INSTALLATION_ROOT%\installed\x86-windows-static\include" ^
+          /I"%VCPKG_INSTALLATION_ROOT%\installed\x86-windows\include" ^
           xlsxwriter_pb_wrapper.cpp ^
           /link ^
-          /LIBPATH:"%VCPKG_INSTALLATION_ROOT%\installed\x86-windows-static\lib" ^
+          /LIBPATH:"%VCPKG_INSTALLATION_ROOT%\installed\x86-windows\lib" ^
           xlsxwriter.lib zlib.lib ^
           /OUT:xlsxwriter_pb.dll ^
           /DEF:xlsxwriter_pb.def
+    
+    - name: Copy runtime DLLs
+      shell: cmd
+      run: |
+        copy "%VCPKG_INSTALLATION_ROOT%\installed\x86-windows\bin\*.dll" .
     
     - name: Upload DLL artifact
       uses: actions/upload-artifact@v4
@@ -47,6 +50,7 @@ jobs:
           xlsxwriter_pb.dll
           xlsxwriter_pb.lib
           xlsxwriter_pb.exp
+          zlib1.dll
         retention-days: 30
     
     - name: Create Release on Tag
@@ -56,5 +60,6 @@ jobs:
         files: |
           xlsxwriter_pb.dll
           xlsxwriter_pb.lib
+          zlib1.dll
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
