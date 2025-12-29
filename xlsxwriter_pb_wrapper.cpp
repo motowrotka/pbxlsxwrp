@@ -197,6 +197,30 @@ __declspec(dllexport) int __stdcall pb_worksheet_autofilter(
     return worksheet_autofilter((lxw_worksheet*)worksheet, first_row, first_col, last_row, last_col);
 }
 
+__declspec(dllexport)
+int __stdcall pb_worksheet_autofit_column(
+    PB_WORKSHEET ws,
+    int col,
+    int max_chars,
+    PB_FORMAT format)
+{
+    lxw_worksheet* w = safe_ws(ws);
+    if (!w) return -1;
+
+    if (max_chars <= 0) {
+        // fallback – np. standardowa szerokość 8.43
+        return worksheet_set_column(w, col, col, 8.43, safe_fmt(format));
+    }
+
+    // Heurystyka: Excelowa szerokość ~ liczba znaków * współczynnik
+    // Dla Calibri 11 mniej więcej 1:1, ale dodamy trochę zapasu.
+    double padding = 1.0;      // dodatkowy zapas na margines/padding
+    double width = max_chars + padding;
+
+    return worksheet_set_column(w, col, col, width, safe_fmt(format));
+}
+
+
 // Close workbook
 __declspec(dllexport) int __stdcall pb_workbook_close(PB_WORKBOOK workbook) {
     if (!workbook) return -1;
