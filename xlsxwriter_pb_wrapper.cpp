@@ -12,6 +12,15 @@ typedef void* PB_WORKBOOK;
 typedef void* PB_WORKSHEET;
 typedef void* PB_FORMAT;
 
+
+static inline lxw_worksheet* safe_ws(PB_WORKSHEET ws) {
+    return (lxw_worksheet*)ws;
+}
+
+static inline lxw_format* safe_fmt(PB_FORMAT fmt) {
+    return (lxw_format*)fmt;
+}
+
 // Create a new workbook
 __declspec(dllexport) PB_WORKBOOK __stdcall pb_workbook_new(const char* filename) {
     if (!filename) return NULL;
