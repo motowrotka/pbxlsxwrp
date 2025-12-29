@@ -23,7 +23,8 @@ jobs:
       - name: Build wrapper DLL
         shell: msys2 {0}
         run: |
-          gcc -shared -O2 -Wall -Wextra -o xlsxwriter_pb.dll xlsxwriter_pb_wrapper.cpp -lxlsxwriter
+          g++ -shared -O2 -Wall -Wextra -o xlsxwriter_pb.dll xlsxwriter_pb_wrapper.cpp -lxlsxwriter -lstdc++
+
 
           # Minimalne zależności libxlsxwriter
           cp /mingw32/bin/libxlsxwriter.dll .
