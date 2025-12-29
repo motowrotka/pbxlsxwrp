@@ -197,6 +197,13 @@ __declspec(dllexport) int __stdcall pb_worksheet_autofilter(
     return worksheet_autofilter((lxw_worksheet*)worksheet, first_row, first_col, last_row, last_col);
 }
 
+
+// Close workbook
+__declspec(dllexport) int __stdcall pb_workbook_close(PB_WORKBOOK workbook) {
+    if (!workbook) return -1;
+    return workbook_close((lxw_workbook*)workbook);
+}
+
 __declspec(dllexport)
 int __stdcall pb_worksheet_autofit_column(
     PB_WORKSHEET ws,
@@ -218,13 +225,6 @@ int __stdcall pb_worksheet_autofit_column(
     double width = max_chars + padding;
 
     return worksheet_set_column(w, col, col, width, safe_fmt(format));
-}
-
-
-// Close workbook
-__declspec(dllexport) int __stdcall pb_workbook_close(PB_WORKBOOK workbook) {
-    if (!workbook) return -1;
-    return workbook_close((lxw_workbook*)workbook);
 }
 
 // Get version info
