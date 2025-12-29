@@ -15,6 +15,7 @@ typedef void* PB_FORMAT;
 // Create a new workbook
 __declspec(dllexport) PB_WORKBOOK __stdcall pb_workbook_new(const char* filename) {
     if (!filename) return NULL;
+    setlocale(LC_NUMERIC, "C");
     return (PB_WORKBOOK)workbook_new(filename);
 }
 
