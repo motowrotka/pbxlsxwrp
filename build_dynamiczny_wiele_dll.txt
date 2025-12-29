@@ -1,0 +1,58 @@
+name: build-xlsxwrap
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup MSYS2 MINGW32
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW32
+          update: true
+          install: >
+            mingw-w64-i686-gcc
+            mingw-w64-i686-libxlsxwriter
+
+      - name: Build wrapper DLL
+        shell: msys2 {0}
+        run: |
+          gcc -shared -O2 -Wall -Wextra -o xlsxwriter_pb.dll xlsxwriter_pb_wrapper.cpp -lxlsxwriter
+
+          # Minimalne zależności libxlsxwriter
+          cp /mingw32/bin/libxlsxwriter.dll .
+          cp /mingw32/bin/zlib1.dll .
+          cp /mingw32/bin/libwinpthread-1.dll .
+          cp /mingw32/bin/libgcc_s_dw2-1.dll .
+          cp /mingw32/bin/libstdc++-6.dll .
+
+          # libpng – kopiuj tylko jeśli istnieje
+          for f in /mingw32/bin/libpng*.dll; do
+            if [ -f "$f" ]; then
+              cp "$f" .
+            fi
+          done
+
+
+      - name: List artifacts
+        shell: msys2 {0}
+        run: ls -l
+
+      - name: Upload DLLs
+        uses: actions/upload-artifact@v4
+        with:
+          name: xlsxwriter_pb
+          path: |
+            xlsxwriter_pb.dll
+            libxlsxwriter.dll
+            zlib1.dll
+            libpng16-16.dll
+            libwinpthread-1.dll
+            libgcc_s_dw2-1.dll
+            libstdc++-6.dll
