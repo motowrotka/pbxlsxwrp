@@ -21,4 +21,5 @@ EXPORTS
     pb_worksheet_insert_image
     pb_worksheet_autofilter
     pb_workbook_close
+    pb_worksheet_autofit_column
     pb_get_version
