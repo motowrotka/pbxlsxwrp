@@ -17,6 +17,7 @@ EXPORTS
     pb_format_set_align
     pb_format_set_num_format
     pb_format_set_border
+    pb_format_set_text_wrap
     pb_worksheet_merge_range
     pb_worksheet_insert_image
     pb_worksheet_autofilter
