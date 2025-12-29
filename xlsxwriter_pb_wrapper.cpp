@@ -87,26 +87,37 @@ __declspec(dllexport) int __stdcall pb_worksheet_write_datetime(
 }
 
 // Set column width
-__declspec(dllexport) int __stdcall pb_worksheet_set_column(
+__declspec(dllexport)
+int __stdcall pb_worksheet_set_column(
     PB_WORKSHEET worksheet,
     int first_col,
     int last_col,
     double width,
-    PB_FORMAT format) {
-    
+    PB_FORMAT format)
+{
     if (!worksheet) return -1;
-    return worksheet_set_column((lxw_worksheet*)worksheet, first_col, last_col, width, (lxw_format*)format);
+
+    lxw_format* fmt = NULL;
+    if (format != NULL && format != 0)
+        fmt = (lxw_format*)format;
+    
+    return worksheet_set_column((lxw_worksheet*)worksheet, first_col, last_col, width, fmt);
 }
 
-// Set row height
-__declspec(dllexport) int __stdcall pb_worksheet_set_row(
+__declspec(dllexport)
+int __stdcall pb_worksheet_set_row(
     PB_WORKSHEET worksheet,
     int row,
     double height,
-    PB_FORMAT format) {
-    
+    PB_FORMAT format)
+{
     if (!worksheet) return -1;
-    return worksheet_set_row((lxw_worksheet*)worksheet, row, height, (lxw_format*)format);
+
+    lxw_format* fmt = NULL;
+    if (format != NULL && format != 0)
+        fmt = (lxw_format*)format;
+
+    return worksheet_set_row((lxw_worksheet*)worksheet, row, height, fmt);
 }
 
 // Add format
