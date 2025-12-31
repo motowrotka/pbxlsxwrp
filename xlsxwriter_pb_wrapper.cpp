@@ -1,6 +1,7 @@
 #include <windows.h>
 #include <string>
 #include <locale.h>
+#include <cstdint>
 #include "xlsxwriter.h"
 
 extern "C" {
@@ -91,8 +92,8 @@ __declspec(dllexport) PB_WORKSHEET __stdcall pb_worksheet_add(PB_WORKBOOK workbo
 // ------------------------------------------------------------
 __declspec(dllexport) int __stdcall pb_worksheet_write_string(
     PB_WORKSHEET worksheet,
-    int row,
-    int col,
+    std::int32_t row,
+    std::int32_t col,
     const char* text,
     PB_FORMAT format)
 {
@@ -115,8 +116,8 @@ __declspec(dllexport) int __stdcall pb_worksheet_write_string(
 // ------------------------------------------------------------
 __declspec(dllexport) int __stdcall pb_worksheet_write_number(
     PB_WORKSHEET worksheet,
-    int row,
-    int col,
+    std::int32_t row,
+    std::int32_t col,
     double number,
     PB_FORMAT format)
 {
@@ -130,8 +131,8 @@ __declspec(dllexport) int __stdcall pb_worksheet_write_number(
 // ------------------------------------------------------------
 __declspec(dllexport) int __stdcall pb_worksheet_write_formula(
     PB_WORKSHEET worksheet,
-    int row,
-    int col,
+    std::int32_t row,
+    std::int32_t col,
     const char* formula,
     PB_FORMAT format)
 {
@@ -154,8 +155,8 @@ __declspec(dllexport) int __stdcall pb_worksheet_write_formula(
 // ------------------------------------------------------------
 __declspec(dllexport) int __stdcall pb_worksheet_write_datetime(
     PB_WORKSHEET worksheet,
-    int row,
-    int col,
+    std::int32_t row,
+    std::int32_t col,
     int year,
     int month,
     int day,
@@ -184,8 +185,8 @@ __declspec(dllexport) int __stdcall pb_worksheet_write_datetime(
 __declspec(dllexport)
 int __stdcall pb_worksheet_set_column(
     PB_WORKSHEET worksheet,
-    int first_col,
-    int last_col,
+    std::int32_t first_col,
+    std::int32_t last_col,
     double width,
     PB_FORMAT format)
 {
@@ -196,7 +197,7 @@ int __stdcall pb_worksheet_set_column(
 __declspec(dllexport)
 int __stdcall pb_worksheet_set_row(
     PB_WORKSHEET worksheet,
-    int row,
+    std::int32_t row,
     double height,
     PB_FORMAT format)
 {
@@ -266,10 +267,10 @@ __declspec(dllexport) void __stdcall pb_format_set_text_wrap(PB_FORMAT format) {
 // ------------------------------------------------------------
 __declspec(dllexport) int __stdcall pb_worksheet_merge_range(
     PB_WORKSHEET worksheet,
-    int first_row,
-    int first_col,
-    int last_row,
-    int last_col,
+    std::int32_t first_row,
+    std::int32_t first_col,
+    std::int32_t last_row,
+    std::int32_t last_col,
     const char* text,
     PB_FORMAT format)
 {
@@ -294,8 +295,8 @@ __declspec(dllexport) int __stdcall pb_worksheet_merge_range(
 // ------------------------------------------------------------
 __declspec(dllexport) int __stdcall pb_worksheet_insert_image(
     PB_WORKSHEET worksheet,
-    int row,
-    int col,
+    std::int32_t row,
+    std::int32_t col,
     const char* filename)
 {
     if (!worksheet || !filename) return -1;
@@ -316,10 +317,10 @@ __declspec(dllexport) int __stdcall pb_worksheet_insert_image(
 // ------------------------------------------------------------
 __declspec(dllexport) int __stdcall pb_worksheet_autofilter(
     PB_WORKSHEET worksheet,
-    int first_row,
-    int first_col,
-    int last_row,
-    int last_col)
+    std::int32_t first_row,
+    std::int32_t first_col,
+    std::int32_t last_row,
+    std::int32_t last_col)
 {
     if (!worksheet) return -1;
     return worksheet_autofilter(safe_ws(worksheet), first_row, first_col, last_row, last_col);
@@ -341,7 +342,7 @@ __declspec(dllexport) int __stdcall pb_workbook_close(PB_WORKBOOK workbook) {
 __declspec(dllexport)
 int __stdcall pb_worksheet_autofit_column(
     PB_WORKSHEET ws,
-    int col,
+    std::int32_t col,
     int max_chars,
     PB_FORMAT format)
 {
@@ -358,7 +359,7 @@ int __stdcall pb_worksheet_autofit_column(
 //  Version info
 // ------------------------------------------------------------
 __declspec(dllexport) const char* __stdcall pb_get_version() {
-    return "libxlsxwriter PowerBuilder Wrapper v1.2 (UTF-8 + wrap text)";
+    return "libxlsxwriter PowerBuilder Wrapper v1.3 (UTF-8 + wrap text, 32-bit rows/cols)";
 }
 
 } // extern "C"
