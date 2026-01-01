@@ -6,6 +6,7 @@ EXPORTS
     pb_worksheet_write_number
     pb_worksheet_write_formula
     pb_worksheet_write_datetime
+    pb_worksheet_write_row
     pb_worksheet_set_column
     pb_worksheet_set_row
     pb_workbook_add_format
