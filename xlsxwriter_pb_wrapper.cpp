@@ -178,6 +178,45 @@ __declspec(dllexport) int __stdcall pb_worksheet_write_datetime(
     return worksheet_write_datetime(safe_ws(worksheet), row, col, &dt, safe_fmt(format));
 }
 
+// ------------------------------------------------------------
+//  Write full row (fast path)
+// ------------------------------------------------------------
+__declspec(dllexport) int __stdcall pb_worksheet_write_row(
+    PB_WORKSHEET worksheet,
+    std::int32_t row,
+    const char** values,
+    const int* visible,
+    PB_FORMAT* formats,
+    std::int32_t colcount)
+{
+    if (!worksheet || !values || !visible) 
+        return -1;
+
+    lxw_worksheet* ws = safe_ws(worksheet);
+
+    int excel_col = 0;
+
+    for (int i = 0; i < colcount; i++) {
+
+        if (visible[i]) {
+
+            const char* v = values[i];
+            if (!v) v = "";
+
+            worksheet_write_string(
+                ws,
+                row,
+                excel_col,
+                v,
+                safe_fmt(formats ? formats[i] : NULL)
+            );
+
+            excel_col++;
+        }
+    }
+
+    return 0;
+}
 
 // ------------------------------------------------------------
 //  Column / row formatting
