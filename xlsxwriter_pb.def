@@ -25,3 +25,4 @@ EXPORTS
     pb_workbook_close
     pb_worksheet_autofit_column
     pb_get_version
+    pb_convert_color
