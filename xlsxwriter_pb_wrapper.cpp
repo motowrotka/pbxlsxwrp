@@ -401,4 +401,15 @@ __declspec(dllexport) const char* __stdcall pb_get_version() {
     return "libxlsxwriter PowerBuilder Wrapper v1.3 (UTF-8 + wrap text, 32-bit rows/cols)";
 }
 
+static uint32_t pbcolor_to_excel(uint32_t pb)
+{
+    uint32_t r = (pb & 0x000000FF);
+    uint32_t g = (pb & 0x0000FF00) >> 8;
+    uint32_t b = (pb & 0x00FF0000) >> 16;
+
+    return (r << 16) | (g << 8) | b;
+}
+
+__declspec(dllexport) uint32_t __stdcall pb_convert_color(uint32_t pb_color) { return pbcolor_to_excel(pb_color); }
+
 } // extern "C"
