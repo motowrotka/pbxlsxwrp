@@ -61,12 +61,12 @@ __declspec(dllexport) PB_WORKBOOK __stdcall pb_workbook_new(const char* filename
 
     setlocale(LC_NUMERIC, "C");
 
-    std::string utf8_filename = ansi_to_utf8(filename);
-    if (utf8_filename.empty())
-        return NULL;
+    //std::string utf8_filename = ansi_to_utf8(filename);
+    //if (utf8_filename.empty())
+    //    return NULL;
 
     //return (PB_WORKBOOK)workbook_new(utf8_filename.c_str());
-    return (PB_WORKBOOK)workbook_new(filename.c_str());
+    return (PB_WORKBOOK)workbook_new(filename);
 }
 
 
@@ -204,11 +204,14 @@ __declspec(dllexport) int __stdcall pb_worksheet_write_row(
             const char* v = values[i];
             if (!v) v = "";
 
+            // 🔥 KONWERSJA ANSI → UTF‑8
+            std::string utf8 = ansi_to_utf8(v);
+
             worksheet_write_string(
                 ws,
                 row,
                 excel_col,
-                v,
+                utf8.c_str(),
                 safe_fmt(formats ? formats[i] : NULL)
             );
 
