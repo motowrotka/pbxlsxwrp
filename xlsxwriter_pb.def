@@ -1,6 +1,8 @@
 LIBRARY xlsxwriter_pb
 EXPORTS
     pb_workbook_new
+    pb_workbook_close
+    pb_workbook_add_format
     pb_worksheet_add
     pb_worksheet_write_string
     pb_worksheet_write_number
@@ -9,7 +11,11 @@ EXPORTS
     pb_worksheet_write_row
     pb_worksheet_set_column
     pb_worksheet_set_row
-    pb_workbook_add_format
+    pb_worksheet_freeze_panes
+    pb_worksheet_merge_range
+    pb_worksheet_insert_image
+    pb_worksheet_autofilter
+    pb_worksheet_autofit_column
     pb_format_set_bold
     pb_format_set_italic
     pb_format_set_font_size
@@ -19,9 +25,4 @@ EXPORTS
     pb_format_set_num_format
     pb_format_set_border
     pb_format_set_text_wrap
-    pb_worksheet_merge_range
-    pb_worksheet_insert_image
-    pb_worksheet_autofilter
-    pb_workbook_close
-    pb_worksheet_autofit_column
     pb_get_version
