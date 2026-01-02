@@ -403,9 +403,9 @@ __declspec(dllexport) const char* __stdcall pb_get_version() {
 
 uint32_t pbcolor_to_excel(uint32_t pb)
 {
-    uint32_t b = (pb & 0x00FF0000) >> 16; // pierwszy bajt: F0
+    uint32_t r = (pb & 0x00FF0000) >> 16; // pierwszy bajt: F0
     uint32_t g = (pb & 0x0000FF00);       // środkowy bajt: CA (już na swojej pozycji po <<8)
-    uint32_t r = (pb & 0x000000FF) << 16; // ostatni bajt: A6 przeniesiony na początek
+    uint32_t b = (pb & 0x000000FF) << 16; // ostatni bajt: A6 przeniesiony na początek
 
     return r | g | b;                     // A6 CA F0
 }
