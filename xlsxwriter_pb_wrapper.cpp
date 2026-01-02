@@ -397,4 +397,20 @@ void __stdcall pb_worksheet_freeze_panes(lxw_worksheet* ws, uint32_t row, uint32
     worksheet_freeze_panes(ws, row, col);
 }
 
+__declspec(dllexport) void __stdcall pb_format_set_num_format(
+    PB_FORMAT format,
+    const char* num_format)
+{
+    if (!format || !num_format)
+        return;
+
+    // Konwersja ANSI → UTF‑8 (PB9 → libxlsxwriter)
+    std::string utf8 = ansi_to_utf8(num_format);
+
+    format_set_num_format(safe_fmt(format), utf8.c_str());
+}
+
+
+
+
 } // extern "C"
