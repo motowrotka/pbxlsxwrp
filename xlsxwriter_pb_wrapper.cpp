@@ -60,12 +60,6 @@ __declspec(dllexport) PB_WORKBOOK __stdcall pb_workbook_new(const char* filename
     if (!filename) return NULL;
 
     setlocale(LC_NUMERIC, "C");
-
-    //std::string utf8_filename = ansi_to_utf8(filename);
-    //if (utf8_filename.empty())
-    //    return NULL;
-
-    //return (PB_WORKBOOK)workbook_new(utf8_filename.c_str());
     return (PB_WORKBOOK)workbook_new(filename);
 }
 
