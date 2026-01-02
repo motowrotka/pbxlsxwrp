@@ -25,5 +25,4 @@ EXPORTS
     pb_format_set_num_format
     pb_format_set_border
     pb_format_set_text_wrap
-    pb_format_set_num_format
     pb_get_version
