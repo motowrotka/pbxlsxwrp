@@ -394,7 +394,7 @@ int __stdcall pb_worksheet_autofit_column(
 }
 
 extern "C" __declspec(dllexport)
-void __stdcall ws_freeze_panes(lxw_worksheet* ws, uint32_t row, uint32_t col)
+void __stdcall pb_worksheet_freeze_panes(lxw_worksheet* ws, uint32_t row, uint32_t col)
 {
     worksheet_freeze_panes(ws, row, col);
 }
