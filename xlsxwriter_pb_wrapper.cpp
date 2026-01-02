@@ -393,4 +393,10 @@ int __stdcall pb_worksheet_autofit_column(
     return worksheet_set_column(w, col, col, width, safe_fmt(format));
 }
 
+extern "C" __declspec(dllexport)
+void __stdcall ws_freeze_panes(lxw_worksheet* ws, uint32_t row, uint32_t col)
+{
+    worksheet_freeze_panes(ws, row, col);
+}
+
 } // extern "C"
